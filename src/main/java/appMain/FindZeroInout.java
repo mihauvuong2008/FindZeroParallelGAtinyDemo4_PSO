@@ -8,12 +8,12 @@ public final class FindZeroInout {
 	}
 
 	public final static double y(double x) {
-//		return (Math.pow(x, 2) + Math.pow(Math.E, Math.pow(x, 2 * x)) + x * Math.pow(4, x)) / (2 * x + 1)
-//				+ (2 * x + Math.pow(3, 2 * x) - 1) / (5 * Math.pow(x, 3) + Math.log10(x) - 1);
+		return (Math.pow(x, 2) + Math.pow(Math.E, Math.pow(x, 2 * x)) + x * Math.pow(4, x)) / (2 * x + 1)
+				+ (2 * x + Math.pow(3, 2 * x) - 1) / (5 * Math.pow(x, 3) + Math.log10(x) - 1);
 
 //		return 2 * Math.pow(x, 5) + 3 * Math.pow(x, 4) - 8 * Math.pow(x, 3) + 2 * Math.pow(x, 2) + 1;
 
-		return (x - 5) * (x + 4) * (x + 6) * (x - 3) * (x - 7);
+//		return (x - 5) * (x + 4) * (x + 6) * (x - 3) * (x - 7);
 	}
 
 	public final static double getUpgradedx(double upgrade, long upgradeLen, double dNAres) {

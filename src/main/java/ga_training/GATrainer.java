@@ -75,7 +75,10 @@ public class GATrainer {
 
 	private boolean autoUpgradeByPSO = false;
 	private int sizeOfPSOPopulation = 2500;
-	private int PSOLoopTotal = 50;
+	private int PSOLoopTotal = 500;
+	private double psoBorder = 20;
+	private GA_PSO_InOutForm ga_PSO_InOutForm;
+	private PSOsupport psoupport;
 
 	public GATrainer() {
 		super();
@@ -171,6 +174,7 @@ public class GATrainer {
 				log.info("get Algor Result...");
 				evaluatedCandidate = getAlgoritResult(candidateSet); // get fake solution
 				keepBestResultCache = aiEvolution.getReinforcementLearning().getTopResult(candidateSet);
+				//
 				getResultAndSolution(evaluatedCandidate);
 			}
 			//
@@ -208,10 +212,13 @@ public class GATrainer {
 				upgradecount = 0;
 				isFirstupgradeSolution = false;
 			}
-			if (isAutoUpgradeByPSO()) {
-				autoUpgradeByPSO(candidateSet);
+			// ===========PSO============
+			//
+			//
+			if (psoupport == null) {
+				psoupport = new PSOsupport();
+				psoupport.start();
 			}
-
 			//
 			//
 			//
@@ -250,20 +257,43 @@ public class GATrainer {
 		isCompleteTrain = true;
 	}
 
-	GA_PSO_InOutForm ga_PSO_InOutForm;
+	class PSOsupport extends Thread {
 
-	private void autoUpgradeByPSO(ArrayList<EvaluatedCandidate> candidateSet) {
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(1200);
+					if (isAutoUpgradeByPSO()) {
+						autoUpgradeByPSO();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 
-		double border = currResult.getResult();
-		GA_PSO_InOutForm ga_PSO_InOutForm = new GA_PSO_InOutForm();
-		ga_PSO_InOutForm.setSizeOfPopulation(sizeOfPSOPopulation);
-		Space space = new Space(10, border + 100, border + 100, border + 100, border - 100, border - 100, border - 100);
-		ga_PSO_InOutForm.setSpace(space);
-		ga_PSO_InOutForm.setLoopTotal(PSOLoopTotal);
-		PSO_InOut pso_InOut = new PSO_InOut(ga_PSO_InOutForm);
-		pso_InOut.action();
-		aiEvolution.getValuer().setUpgrade(pso_InOut.getResult());
-		System.out.println("PSO upgrade: " + pso_InOut.getResult());
+		private void autoUpgradeByPSO() {
+
+			double border = currResult.getResult();
+			GA_PSO_InOutForm ga_PSO_InOutForm = new GA_PSO_InOutForm();
+			ga_PSO_InOutForm.setSizeOfPopulation(sizeOfPSOPopulation);
+
+			Space space = new Space((int) (psoBorder / 10), border + psoBorder, border + psoBorder, border + psoBorder,
+					border - psoBorder, border - psoBorder, border - psoBorder);
+			ga_PSO_InOutForm.setSpace(space);
+			ga_PSO_InOutForm.setLoopTotal(PSOLoopTotal);
+			PSO_InOut pso_InOut = new PSO_InOut(ga_PSO_InOutForm);
+			pso_InOut.action();
+
+			double _result = compare(pso_InOut.getResult(), bestResult.getResult());
+			synchronized (aiEvolution) {
+//				aiEvolution.getValuer().setUpgrade(pso_InOut.getResult());
+				aiEvolution.getValuer().setUpgrade(_result);
+			}
+
+			log.info("PSO upgrade compare: " + "(" + pso_InOut.getResult() + ")");
+		}
 	}
 
 	private void updateTrainInfo(int thisLoopTotaltime, int size, int loop) {
@@ -412,20 +442,6 @@ public class GATrainer {
 				}
 		}
 	}
-
-//	private EvaluatedCandidate getBadestResult(ArrayList<EvaluatedCandidate> candidateSet) {
-//		double min = Double.MAX_VALUE; //
-//		EvaluatedCandidate result = null;
-//		int size = candidateSet.size();
-//		for (EvaluatedCandidate evaluatedCandidate : candidateSet) {
-//			double getFitness = evaluatedCandidate.getFitness();
-//			if (min >= getFitness) {
-//				min = getFitness;
-//				result = evaluatedCandidate;
-//			}
-//		}
-//		return result;
-//	}
 
 	private EvaluatedCandidate getAlgoritResult(ArrayList<EvaluatedCandidate> candidateSet) {
 		double max = -1 * Double.MAX_VALUE; //
@@ -719,6 +735,14 @@ public class GATrainer {
 
 	public void setPSOLoopTotal(int pSOLoopTotal) {
 		PSOLoopTotal = pSOLoopTotal;
+	}
+
+	public void setBorder(double psoBorder) {
+		this.psoBorder = psoBorder;
+	}
+
+	public double getPsoBorder() {
+		return psoBorder;
 	}
 
 }

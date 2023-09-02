@@ -34,9 +34,6 @@ public class PSOTrainer {
 		Individual result = null;
 		ArrayList<Individual> population = map.getPopulation();
 		for (int i = 0; i < loopTotal; i++) {
-			System.out.println("start... ");
-
-			System.out.println("===");
 
 //			System.out.println("populationValue... ");
 			valuer.populationValue(population);
@@ -54,20 +51,13 @@ public class PSOTrainer {
 
 //			System.out.println("moving... ");
 			map.move(population);
-
-			System.out.println("===");
-			System.out.println("loop: " + i);
-
 			System.out
-					.println("x: "
+					.println("PSOloop: " + i + ", x: "
 							+ valuer._x(result.getPosition().getX(), result.getPosition().getY(),
 									result.getPosition().getZ())
 							+ "(" + result.getPosition().getX() + ", y: " + result.getPosition().getY() + ", z: "
 							+ result.getPosition().getZ() + ")");
-			System.out.println();
 			System.out.println("===>result: " + result.getValue());
-			System.out.println();
-			System.out.println();
 			System.out.println();
 		}
 		if (result != null)
@@ -78,18 +68,12 @@ public class PSOTrainer {
 	private Individual getBestResult(ArrayList<Individual> population) {
 		double max = -1 * Double.MAX_VALUE;
 		Individual rs = null;
-		double avg = 0;
-		int i = 0;
 		for (Individual individual : population) {
 			if (max < individual.getValue()) {
 				max = individual.getValue();
 				rs = individual;
 			}
-			i += 1;
-			avg += individual.getValue();
 		}
-		avg = avg / i;
-		System.out.println("Average: " + avg);
 		return rs;
 	}
 
