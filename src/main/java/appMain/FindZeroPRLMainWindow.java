@@ -528,7 +528,7 @@ public class FindZeroPRLMainWindow {
 		lblLoop_1.setText("Loop:");
 
 		final Spinner spinner_3 = new Spinner(grpPso, SWT.BORDER);
-		spinner_3.setMaximum(200);
+		spinner_3.setMaximum(500);
 		spinner_3.setMinimum(5);
 		spinner_3.setSelection(trainer.getPSOLoopTotal());
 

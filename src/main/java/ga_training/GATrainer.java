@@ -75,7 +75,7 @@ public class GATrainer {
 
 	private boolean autoUpgradeByPSO = false;
 	private int sizeOfPSOPopulation = 2500;
-	private int PSOLoopTotal = 500;
+	private int PSOLoopTotal = 200;
 	private double psoBorder = 20;
 	private GA_PSO_InOutForm ga_PSO_InOutForm;
 	private PSOsupport psoupport;
@@ -258,6 +258,7 @@ public class GATrainer {
 	}
 
 	class PSOsupport extends Thread {
+		double upgrade = 0;
 
 		public void run() {
 			while (true) {
@@ -284,11 +285,13 @@ public class GATrainer {
 			ga_PSO_InOutForm.setSpace(space);
 			ga_PSO_InOutForm.setLoopTotal(PSOLoopTotal);
 			PSO_InOut pso_InOut = new PSO_InOut(ga_PSO_InOutForm);
+			pso_InOut.setUpgrade(upgrade);
 			pso_InOut.action();
 
 			double _result = compare(pso_InOut.getResult(), bestResult.getResult());
 			synchronized (aiEvolution) {
 //				aiEvolution.getValuer().setUpgrade(pso_InOut.getResult());
+				upgrade = _result;
 				aiEvolution.getValuer().setUpgrade(_result);
 			}
 
