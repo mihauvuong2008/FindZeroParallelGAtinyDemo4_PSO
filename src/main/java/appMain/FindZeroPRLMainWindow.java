@@ -104,7 +104,7 @@ public class FindZeroPRLMainWindow {
 		shlGaTrainer.setMinimumSize(new Point(800, 480));
 		shlGaTrainer.setImage(SWTResourceManager.getImage(FindZeroPRLMainWindow.class, "/newt/data/jogamp-32x32.png"));
 		shlGaTrainer.setLocation(50, 50);
-		shlGaTrainer.setSize(1000, 618);
+		shlGaTrainer.setSize(1070, 660);
 		shlGaTrainer.setText("GA trainer");
 		shlGaTrainer.setLayout(new GridLayout(2, false));
 		trainer = new GATrainer();
@@ -505,24 +505,8 @@ public class FindZeroPRLMainWindow {
 
 		Group grpPso = new Group(composite_4, SWT.NONE);
 		grpPso.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 2));
-		grpPso.setLayout(new GridLayout(7, false));
+		grpPso.setLayout(new GridLayout(6, false));
 		grpPso.setText("PSO");
-
-		final Button btnPso = new Button(grpPso, SWT.CHECK);
-		btnPso.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnPso.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				trainer.setAutoUpgradeByPSO(btnPso.getSelection());
-			}
-		});
-		btnPso.setText("PSO support:");
-		btnPso.setSelection(trainer.isAutoUpgradeByPSO());
-		new Label(grpPso, SWT.NONE);
-		new Label(grpPso, SWT.NONE);
-		new Label(grpPso, SWT.NONE);
-		new Label(grpPso, SWT.NONE);
-		new Label(grpPso, SWT.NONE);
 
 		Label lblLoop_1 = new Label(grpPso, SWT.NONE);
 		lblLoop_1.setText("Loop:");
@@ -531,11 +515,13 @@ public class FindZeroPRLMainWindow {
 		spinner_3.setMaximum(500);
 		spinner_3.setMinimum(5);
 		spinner_3.setSelection(trainer.getPSOLoopTotal());
-
-		Label label_2 = new Label(grpPso, SWT.SEPARATOR | SWT.VERTICAL);
-		GridData gd_label_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_label_2.heightHint = 25;
-		label_2.setLayoutData(gd_label_2);
+		spinner_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				trainer.setPSOLoopTotal(spinner_3.getSelection());
+			}
+		});
+		spinner_3.setSelection(trainer.getPSOLoopTotal());
 		new Label(grpPso, SWT.NONE);
 
 		Label lblBorder = new Label(grpPso, SWT.NONE);
@@ -559,13 +545,26 @@ public class FindZeroPRLMainWindow {
 		label_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		label_3.setText("" + scale_7.getSelection() / 1000);
 
+		final Button btnPso = new Button(grpPso, SWT.CHECK);
+		btnPso.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnPso.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				trainer.setAutoUpgradeByPSO(btnPso.getSelection());
+			}
+		});
+		btnPso.setText("PSO support:");
+		btnPso.setSelection(trainer.isAutoUpgradeByPSO());
+
+		Label label_2 = new Label(grpPso, SWT.SEPARATOR | SWT.VERTICAL);
+		GridData gd_label_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_label_2.heightHint = 25;
+		label_2.setLayoutData(gd_label_2);
+
 		Label lblPsoSize_1 = new Label(grpPso, SWT.NONE);
 		lblPsoSize_1.setText("PSO size: ");
 
 		final Scale scale_6 = new Scale(grpPso, SWT.NONE);
-		GridData gd_scale_6 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1);
-		gd_scale_6.widthHint = 250;
-		scale_6.setLayoutData(gd_scale_6);
 		scale_6.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -582,13 +581,6 @@ public class FindZeroPRLMainWindow {
 		gd_lblPsoSize.widthHint = 30;
 		lblPsoSize.setLayoutData(gd_lblPsoSize);
 		lblPsoSize.setText("" + trainer.getSizeOfPSOPopulation());
-		spinner_3.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				trainer.setPSOLoopTotal(spinner_3.getSelection());
-			}
-		});
-		spinner_3.setSelection(trainer.getPSOLoopTotal());
 
 		Label lblValuerRator = new Label(composite_4, SWT.NONE);
 		lblValuerRator.setText("Valuer ratio:\r\n(desmoooth)");
