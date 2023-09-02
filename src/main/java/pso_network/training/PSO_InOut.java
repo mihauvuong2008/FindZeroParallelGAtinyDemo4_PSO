@@ -1,13 +1,17 @@
 package pso_network.training;
 
+import org.apache.log4j.Logger;
+
 import appMain.FindZeroInout;
 import appMain.GA_PSO_InOutForm;
 import pso_network.Space;
 
 public class PSO_InOut {
 
+	static Logger log = Logger.getLogger("PSO_InOut");
+
 	private double result;
-	private static double upgrade;
+	private static double upgrade = 0;
 	private int maxspeedSpaceStep = 10;
 	private int sizeOfPopulation;
 	private Space space;
@@ -34,9 +38,9 @@ public class PSO_InOut {
 	public void action() {
 		PSOTrainer trainer = new PSOTrainer(sizeOfPopulation, maxspeedSpaceStep, space, loopTotal);
 		result = upgrade + trainer.train();
-		System.out.println("PSO result: " + result + ", loopTotal: " + loopTotal + ", sizeOfPopulation: "
-				+ sizeOfPopulation + ", maxspeedSpaceStep: " + maxspeedSpaceStep + ", spaceX: " + space.getMaxX()
-				+ ", spaceX: " + space.getMinX());
+		log.info("PSO result: " + result + ", loopTotal: " + loopTotal + ", sizeOfPopulation: " + sizeOfPopulation
+				+ ", maxspeedSpaceStep: " + maxspeedSpaceStep + ", spaceX: " + space.getMaxX() + ", spaceX: "
+				+ space.getMinX());
 	}
 
 	static public double y(double x) {

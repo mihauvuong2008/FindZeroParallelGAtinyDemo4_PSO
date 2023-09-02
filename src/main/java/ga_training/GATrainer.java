@@ -27,7 +27,7 @@ import pso_network.training.PSO_InOut;
 @SuppressWarnings("unused")
 public class GATrainer {
 
-	static Logger log = Logger.getLogger(GATrainer.class.getName());
+	static Logger log = Logger.getLogger("GATrainer");
 
 	private boolean isPauseTrain = false;
 	private boolean isCompleteTrain = false;
@@ -264,7 +264,7 @@ public class GATrainer {
 			while (true) {
 				try {
 					Thread.sleep(1200);
-					if (isAutoUpgradeByPSO()) {
+					if (isAutoUpgradeByPSO() && !isCompleteTrain) {
 						autoUpgradeByPSO();
 					}
 				} catch (InterruptedException e) {
@@ -288,14 +288,12 @@ public class GATrainer {
 			pso_InOut.setUpgrade(upgrade);
 			pso_InOut.action();
 
-//			double _result = compare(pso_InOut.getResult(), bestResult.getResult());
 			double _result = pso_InOut.getResult();
 
-//				aiEvolution.getValuer().setUpgrade(pso_InOut.getResult());
 			upgrade = _result;
 			double partnerFiness = aiEvolution.getValuer().getpartnerValue(_result);
-			System.out.println("partnerFiness: " + partnerFiness + ", solution.getError().getFitness(): "
-					+ solution.getError().getFitness());
+//			System.out.println("partnerFiness: " + partnerFiness + ", solution.getError().getFitness(): "
+//					+ solution.getError().getFitness());
 
 			if (partnerFiness > solution.getError().getFitness()) {
 				synchronized (aiEvolution) {
@@ -303,7 +301,7 @@ public class GATrainer {
 				}
 			}
 
-			log.info("PSO upgrade compare: " + "(" + pso_InOut.getResult() + ")");
+			log.info("PSO upgrade: " + "(" + pso_InOut.getResult() + ")");
 		}
 	}
 

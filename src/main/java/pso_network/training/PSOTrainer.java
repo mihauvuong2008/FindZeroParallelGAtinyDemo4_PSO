@@ -3,12 +3,16 @@ package pso_network.training;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import pso_network.Individual;
 import pso_network.Map;
 import pso_network.Space;
 import pso_network.evolution.Valuer;
 
 public class PSOTrainer {
+
+	static Logger log = Logger.getLogger("PSOTrainer");
 
 	int maxspeedSpaceStep = 10;
 	int loopTotal = 200;
@@ -33,6 +37,7 @@ public class PSOTrainer {
 		initMap(map, valuer);
 		Individual result = null;
 		ArrayList<Individual> population = map.getPopulation();
+		log.info("PSO begin");
 		for (int i = 0; i < loopTotal; i++) {
 
 //			System.out.println("populationValue... ");
@@ -51,15 +56,16 @@ public class PSOTrainer {
 
 //			System.out.println("moving... ");
 			map.move(population);
-			System.out
-					.println("PSOloop: " + i + ", x: "
-							+ valuer._x(result.getPosition().getX(), result.getPosition().getY(),
-									result.getPosition().getZ())
-							+ "(" + result.getPosition().getX() + ", y: " + result.getPosition().getY() + ", z: "
-							+ result.getPosition().getZ() + ")");
-			System.out.println("===>result: " + result.getValue());
-			System.out.println();
+
 		}
+
+		log.info(
+				"PSO complete, raw x: "
+						+ valuer._x(result.getPosition().getX(), result.getPosition().getY(),
+								result.getPosition().getZ())
+						+ "(" + result.getPosition().getX() + ", y: " + result.getPosition().getY() + ", z: "
+						+ result.getPosition().getZ() + ")");
+
 		if (result != null)
 			solution = valuer._x(result.getPosition().getX(), result.getPosition().getY(), result.getPosition().getZ());
 		return solution;
