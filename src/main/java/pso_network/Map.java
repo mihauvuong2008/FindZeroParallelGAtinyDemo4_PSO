@@ -6,8 +6,8 @@ import java.util.Random;
 public class Map {
 
 	private final int maxHerdSize = 20;
-	private final double minimumStep = 1.0E-8;
-	private final double maximumStep = 5.0d;
+	private final double minimumStep = 1.0E-10;
+	private final double maximumStep = 3.0d;
 	private int sizeOfPopulation = 5000;
 	private ArrayList<Individual> population;
 	private ArrayList<Connection> connections;
