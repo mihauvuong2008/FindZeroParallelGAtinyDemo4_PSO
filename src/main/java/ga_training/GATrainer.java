@@ -288,11 +288,19 @@ public class GATrainer {
 			pso_InOut.setUpgrade(upgrade);
 			pso_InOut.action();
 
-			double _result = compare(pso_InOut.getResult(), bestResult.getResult());
-			synchronized (aiEvolution) {
+//			double _result = compare(pso_InOut.getResult(), bestResult.getResult());
+			double _result = pso_InOut.getResult();
+
 //				aiEvolution.getValuer().setUpgrade(pso_InOut.getResult());
-				upgrade = _result;
-				aiEvolution.getValuer().setUpgrade(_result);
+			upgrade = _result;
+			double partnerFiness = aiEvolution.getValuer().getpartnerValue(_result);
+			System.out.println("partnerFiness: " + partnerFiness + ", solution.getError().getFitness(): "
+					+ solution.getError().getFitness());
+
+			if (partnerFiness > solution.getError().getFitness()) {
+				synchronized (aiEvolution) {
+					aiEvolution.getValuer().setUpgrade(_result);
+				}
 			}
 
 			log.info("PSO upgrade compare: " + "(" + pso_InOut.getResult() + ")");

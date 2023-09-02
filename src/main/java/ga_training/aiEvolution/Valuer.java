@@ -59,6 +59,11 @@ public class Valuer {
 		return FindZeroInout.getUpgradedy(getValueLevel(), y);
 	}
 
+	public final double getpartnerValue(double x) {
+		double y = FindZeroInout.y(x);
+		return FindZeroInout.getUpgradedy(getValueLevel(), y);
+	}
+
 	@SuppressWarnings("unused")
 	private final double valueBuilder(double y) {
 		return Math.pow(1 / (0.01 + Math.abs(y)), /* change (remake) digital resource */getValueLevel());// luong gia
