@@ -1,5 +1,7 @@
 package genetoPhenotypic;
 
+import java.math.BigDecimal;
+
 public class BinnaryGentoPhenotypic {
 	public int miniDecimal_to_binary(double i) {
 		return (int) (i + 0.5);
@@ -57,7 +59,7 @@ public class BinnaryGentoPhenotypic {
 		return j / 1000000000;
 	}
 
-	public final static double convertFromBinaryToNegativeDec(double[] output) {
+	public final static double convertFromBinaryToNegativeDec___BASIC(double[] output) {
 		long /** more digital resource */
 		j = 0;
 		int len = output.length - 1;
@@ -69,6 +71,23 @@ public class BinnaryGentoPhenotypic {
 		}
 		int negative = output[len] > 0.5 ? 1 : -1;
 		return negative * ((double) j / 1000000000);
+	}
+
+	public final static double convertFromBinaryToNegativeDec(double[] output) {
+		long /** more digital resource */
+		j = 0;
+		int len = output.length - 1;
+		int _len = len - 1;
+		for (int i = 0; i < len; i++) {
+			if (output[i] >= 0.5) {
+				j += Math.pow(2, _len - i);
+			}
+		}
+		int negative = (output[len] > 0.5) ? 1 : -1;
+		BigDecimal bdj = new BigDecimal(j);
+		BigDecimal _rs = bdj.divide(new BigDecimal(1000000000));
+		double rs = negative * _rs.doubleValue();
+		return rs;
 	}
 
 	public static double[] DecToBinary(int no, int LenOfGen) {

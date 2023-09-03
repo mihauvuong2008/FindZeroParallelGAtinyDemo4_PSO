@@ -241,7 +241,7 @@ public class FindZeroPRLMainWindow {
 			}
 		});
 		btnCPUprioritize.setText("CPU Prioritize");
-		btnCPUprioritize.setSelection(true);
+		btnCPUprioritize.setSelection(trainer.getCPUprioritize());
 		new Label(grpCandidate_1, SWT.NONE);
 
 		Label lblChooseSelector = new Label(grpCandidate_1, SWT.NONE);

@@ -13,11 +13,11 @@ public class Accelerater {
 	private final int maxOfStream = 480;
 	private final int minOfStream = 5;
 	private final int maxSizeOfIngredien = 1800;
-	private final int minSizeOfIngredient = 120;
+	private final int minSizeOfIngredient = 150;
 	private final int resourceStep = 100;
 	private AiEvolution aiEvolution;
 	private boolean cPUprioritize = true;
-	private final int FORGIVE_TIME = 3;
+	private final int FORGIVE_TIME = 1;
 
 	private StreamInfo sinfo;
 
@@ -31,6 +31,14 @@ public class Accelerater {
 
 	public void setSelector(Selector selector) {
 		this.selector = selector;
+	}
+
+	public boolean iscPUprioritize() {
+		return cPUprioritize;
+	}
+
+	public void setcPUprioritize(boolean cPUprioritize) {
+		this.cPUprioritize = cPUprioritize;
 	}
 
 	public Accelerater(AiEvolution aiEvolution, boolean cPUprioritize, Selector selector) {

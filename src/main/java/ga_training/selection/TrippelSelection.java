@@ -25,6 +25,7 @@ public class TrippelSelection {
 
 	public TrippelSelection(AiEvolution aiEvolution, boolean cPUprioritize, Selector selector) {
 		super();
+		this.cPUprioritize = cPUprioritize;
 		accelerater = new Accelerater(aiEvolution, cPUprioritize, selector);
 	}
 

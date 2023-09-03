@@ -40,9 +40,9 @@ public class GATrainer {
 	private AiEvolution aiEvolution;
 
 	private int loop = 100;
-	private int lenOfGen = 32;
+	private int lenOfGen = 36;
 	private boolean naturalFitnessScores = true;
-	private boolean cPUprioritize = true;
+	private boolean cPUprioritize = false;
 	private String selectorValue = SelectionChooser.COINFLIPGAMESELECTION;
 	Selector selectorChooser;
 	private int firstClasssize = 50000;
@@ -133,18 +133,7 @@ public class GATrainer {
 				//
 				//
 				// ===== Incorporating ======
-//				System.out.println();
-//				System.out.print("populations: " + populations.size());
-//				int countNull = 0;
-//				for (GENE ele : populations) {
-//					if (ele != null)
-//						System.out.print(" ele :" + ele.getGene().length);
-//					else {
-//						System.out.print(" ele :" + ele);
-//						countNull++;
-//					}
-//				}
-//				System.out.println(countNull);
+
 				log.info("Incorporating...");
 				plcls.setupPlandescr(gama, nChildPlan, numOfChild);
 				aiEvolution.Incorporate /* ket hop */ (populations, plcls, makeBestChildgRatio, mutantRatio,
@@ -512,6 +501,9 @@ public class GATrainer {
 	public double upgradeSolution() {
 		// here is another loop for reinforcement learning///
 		double _result = compare(currResult.getResult(), bestResult.getResult());
+//		if (bestResult.getError().getFitness() < 1) {
+//			_result = 0;
+//		}
 		aiEvolution.getValuer().setUpgrade(_result);
 		log.info("UpgradeValuex compare: " + _result);
 		return _result;
@@ -583,10 +575,14 @@ public class GATrainer {
 
 	public void setCPUprioritize(boolean cPUprioritize) {
 		this.cPUprioritize = cPUprioritize;
+		if (accelerater != null)
+			this.accelerater.setcPUprioritize(cPUprioritize);
 	}
 
 	public boolean getCPUprioritize() {
-		return cPUprioritize;
+		if (accelerater != null)
+			return accelerater.iscPUprioritize();
+		return this.cPUprioritize;
 	}
 
 	public int getFirstClasssize() {
