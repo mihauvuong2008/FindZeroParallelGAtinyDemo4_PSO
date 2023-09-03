@@ -13,7 +13,7 @@ public final class FindZeroInout {
 
 //		return 2 * Math.pow(x, 5) + 3 * Math.pow(x, 4) - 8 * Math.pow(x, 3) + 2 * Math.pow(x, 2) + 1;
 
-		return (x - 15) * (x + 14) * (x + 16) * (x - 13) * (x - 17) * (x - 27) * (x - 37);
+		return (x + 10) * (x + 14) * (x + 16) * (x - 13) * (x - 27) * (2 * x * x + 1) * (x - 17);
 	}
 
 	public final static double getUpgradedx(double upgrade, long upgradeLen, double dNAres) {

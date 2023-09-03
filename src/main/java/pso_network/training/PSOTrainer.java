@@ -26,7 +26,7 @@ public class PSOTrainer {
 		this.loopTotal = loopTotal;
 	}
 
-	public double train() {
+	public double train() throws InterruptedException {
 		double solution = -1;
 		pso_network.Map map;
 		Random random = new Random();

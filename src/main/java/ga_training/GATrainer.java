@@ -40,7 +40,7 @@ public class GATrainer {
 	private AiEvolution aiEvolution;
 
 	private int loop = 100;
-	private int lenOfGen = 36;
+	private int lenOfGen = 40;
 	private boolean naturalFitnessScores = true;
 	private boolean cPUprioritize = false;
 	private String selectorValue = SelectionChooser.COINFLIPGAMESELECTION;
@@ -114,10 +114,9 @@ public class GATrainer {
 		boolean isfirstClassinit = false;
 
 		for (int i = 0; i < loop; i++) {
-			updateTrainParamater();
 			pauseTrain();
 			if (cancelTrain) {
-				System.out.println("cancelTrain: " + cancelTrain);
+				log.info("cancelTrain: " + cancelTrain);
 				break;
 			}
 			log.info("");
@@ -138,7 +137,6 @@ public class GATrainer {
 				plcls.setupPlandescr(gama, nChildPlan, numOfChild);
 				aiEvolution.Incorporate /* ket hop */ (populations, plcls, makeBestChildgRatio, mutantRatio,
 						somaMutantRatio, hybridRatio, defendRatio, makeEverythingRatio);
-				//
 				//
 				//
 				//
@@ -165,8 +163,11 @@ public class GATrainer {
 				keepBestResultCache = aiEvolution.getReinforcementLearning().getTopResult(candidateSet);
 				//
 				getResultAndSolution(evaluatedCandidate);
+				//
+				//
+				// ====== updateTrainParamater =====
+				updateTrainParamater();
 			}
-			//
 			//
 			//
 			//
@@ -190,13 +191,9 @@ public class GATrainer {
 			// ===== upgrade ====
 
 			log.info("upgrade...");
-			System.out.println("upgradecount: " + upgradecount + " - isFirstupgradeSolution " + isFirstupgradeSolution
-					+ " - flagUpdateResult " + flagUpdateResult + " - getAutoUpgradeSolution "
-					+ getAutoUpgradeSolution());
 
-			if ((isHaveUpgradeRatio(upgradecount) && isFirstupgradeSolution && getAutoUpgradeSolution())
-					|| (isHaveUpgradeRatio(upgradecount) && flagUpdateResult /* co result moi */
-							&& getAutoUpgradeSolution()/* User yeu cau */)) {
+			if ((isFirstupgradeSolution || flagUpdateResult/* co result moi */) && getAutoUpgradeSolution()
+					&& isHaveUpgradeRatio(upgradecount)/* User yeu cau */) {
 				upgradeSolution();
 				upgradecount = 0;
 				isFirstupgradeSolution = false;
@@ -210,21 +207,14 @@ public class GATrainer {
 			}
 			//
 			//
-			//
-			//
 			// ==== isKeepBestResult ====
 			if (isKeepBestResult) {
-//				evaluatedCandidate = getAlgoritResult(candidateSet);
-//				System.out.println("KeepBestResult getFitness1 " + evaluatedCandidate.getFitness());
 				keepBestResult(populations, keepBestResultCache);
-//				evaluatedCandidate = getAlgoritResult(candidateSet);
-//				System.out.println("KeepBestResult getFitness2 " + evaluatedCandidate.getFitness());
 			}
 
 			// == refresh flag ==
 			flagUpdateResult = false;
-			log.info("Populations: " + populations.size() + ", SelectionRatio: " + selectionRatio
-					+ ", RouletteWheelSelecting Size: [" + size + "])...");
+			log.info("refresh flag. Populations: " + populations.size() + ", SelectionRatio: " + selectionRatio);
 			log.info("");
 
 			// ==== end =====
@@ -263,7 +253,7 @@ public class GATrainer {
 			}
 		}
 
-		private void autoUpgradeByPSO() {
+		private void autoUpgradeByPSO() throws InterruptedException {
 
 			double border = currResult.getResult();
 			GA_PSO_InOutForm ga_PSO_InOutForm = new GA_PSO_InOutForm();
@@ -281,8 +271,6 @@ public class GATrainer {
 
 			upgrade = _result;
 			double partnerFiness = aiEvolution.getValuer().getpartnerValue(_result);
-//			System.out.println("partnerFiness: " + partnerFiness + ", solution.getError().getFitness(): "
-//					+ solution.getError().getFitness());
 
 			if (partnerFiness > solution.getError().getFitness()) {
 				synchronized (aiEvolution) {
@@ -347,9 +335,6 @@ public class GATrainer {
 		currResult = getCurrResult(evaluatedCandidate);
 		showCurrResult();
 
-		// (flagUpdateResult ? aiEvolution.getValuer().getUpgrade() : 0)+
-		// System.out.println(Arrays.toString(evaluatedCandidate.getCandidate().getGene()));
-
 		getBestResult();
 		showBestResult();
 
@@ -365,8 +350,6 @@ public class GATrainer {
 		double ResultValue = FindZeroInout.getUpgradedx(UpgradeValue, aiEvolution.getValuer().getUpgradeLen(), DNAres);
 		Result rs = new Result(UpgradeValue, ResultValue, evaluatedCandidate, Valuelevel);
 
-		System.out.println("DNAres: " + DNAres + ", UpgradeValue: " + UpgradeValue + ", Valuelevel: " + Valuelevel
-				+ " UpgradeLen " + aiEvolution.getValuer().getUpgradeLen() + ", ResultValue: " + ResultValue);
 		return rs;
 	}
 
@@ -374,7 +357,7 @@ public class GATrainer {
 		if (bestResult == null) {
 			bestResult = currResult;
 			flagUpdateResult = true;
-			System.out.println("BestResul updated");
+			log.info("BestResul updated");
 			return;
 		}
 
@@ -386,7 +369,7 @@ public class GATrainer {
 		if (bestResult.getError().getFitness() <= currResult.getError().getFitness()) {
 			bestResult = currResult;
 			flagUpdateResult = true;
-			System.out.println("BestResul updated");
+			log.info("BestResul updated");
 		}
 
 	}
@@ -436,7 +419,6 @@ public class GATrainer {
 					GENE candidate = new GENE();
 					candidate.setGene(evaluatedCandidateGene.getCandidate().getGene());
 					_populations.add(candidate);
-//					System.out.println("keep best rs");
 				}
 		}
 	}
@@ -449,10 +431,7 @@ public class GATrainer {
 
 		for (EvaluatedCandidate evaluatedCandidate : candidateSet) {
 
-//			 System.out.println("evaluatedCandidate.getFitness(): " +
-//			 evaluatedCandidate.getFitness() + ", max: " + max);
 			double getFitness = evaluatedCandidate.getFitness();
-//			System.out.println(getFitness);
 			if (getFitness >= max) {
 				max = getFitness;
 				result = evaluatedCandidate;
@@ -465,7 +444,6 @@ public class GATrainer {
 	}
 
 	private double compare(double currResult, double bestResult) {
-		System.out.println("currResult " + currResult + " bestResult : " + bestResult);
 		char[] compare1 = String.valueOf(currResult).toCharArray();
 		char[] compare2 = String.valueOf(bestResult).toCharArray();
 		boolean flagMatch = true;
@@ -480,7 +458,7 @@ public class GATrainer {
 					}
 					step += 1;
 					UpgradeValuex += String.valueOf(compare2[j]);
-					System.out.print(" " + String.valueOf(compare2[j]));
+//					System.out.print(" " + String.valueOf(compare2[j]));
 					break;
 				}
 			}
@@ -488,7 +466,6 @@ public class GATrainer {
 				break;
 			}
 		}
-		System.out.println();
 
 		if (!UpgradeValuex.isEmpty()) {
 

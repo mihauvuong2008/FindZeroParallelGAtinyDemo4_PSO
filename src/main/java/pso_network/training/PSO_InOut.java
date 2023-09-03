@@ -35,7 +35,7 @@ public class PSO_InOut {
 		loopTotal = inPso_InOutForm.getLoopTotal();
 	}
 
-	public void action() {
+	public void action() throws InterruptedException {
 		PSOTrainer trainer = new PSOTrainer(sizeOfPopulation, maxspeedSpaceStep, space, loopTotal);
 		result = upgrade + trainer.train();
 		log.info("PSO result: " + result + ", loopTotal: " + loopTotal + ", sizeOfPopulation: " + sizeOfPopulation
