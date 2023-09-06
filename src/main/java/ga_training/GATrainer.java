@@ -187,7 +187,6 @@ public class GATrainer {
 			//
 			//
 			//
-			//
 			// ===== upgrade ====
 
 			log.info("upgrade...");
@@ -224,8 +223,6 @@ public class GATrainer {
 			loopTotaltime += thisLoopTotaltime;
 			log.info("current time: " + thisLoopTotaltime);
 			log.info("Total time: " + loopTotaltime);
-			log.info("");
-			log.info("");
 			log.info("");
 			// ==========traininfo============
 			//

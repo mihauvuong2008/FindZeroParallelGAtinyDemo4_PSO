@@ -20,7 +20,7 @@ public class TrippelSelection {
 	private ArrayList<GENE>[] _fakePopulations;
 	private Random[] spaceRandom;
 	private boolean cPUprioritize;
-	private static final int TRIPLE = 6;
+	private static final int TRIPLE = 1;
 	private Accelerater accelerater;
 
 	public TrippelSelection(AiEvolution aiEvolution, boolean cPUprioritize, Selector selector) {
