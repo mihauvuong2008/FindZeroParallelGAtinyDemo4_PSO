@@ -26,7 +26,7 @@ public class DataAdjuster {
 			sigma = Double.MAX_VALUE;
 		}
 		if (Double.isInfinite(Range)) {
-			sigma = Double.MAX_VALUE;
+			Range = Double.MAX_VALUE;
 		}
 		DecimalFormat df = new DecimalFormat("0.#");
 		df.setMaximumFractionDigits((int) (Range + 0.5));
