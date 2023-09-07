@@ -22,6 +22,12 @@ public class DataAdjuster {
 	}
 
 	public double rawDoubletoDouble(double sigma, double Range, int size) {
+		if (Double.isInfinite(sigma) || Double.isNaN(sigma)) {
+			sigma = Double.MAX_VALUE;
+		}
+		if (Double.isInfinite(Range)) {
+			sigma = Double.MAX_VALUE;
+		}
 		DecimalFormat df = new DecimalFormat("0.#");
 		df.setMaximumFractionDigits((int) (Range + 0.5));
 		String f = ZERO_PATTERN() + df.format(sigma);
