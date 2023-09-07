@@ -10,9 +10,7 @@ public class DataAdjuster {
 	private final static double MAX = Double.MAX_VALUE;
 	private final static double MIN = 0;// Double.MIN_VALUE;
 
-	private final int SIZE = 4;// in your right hand
-
-	public String ZERO_PATTERN() {
+	public String ZERO_PATTERN(int SIZE) {
 		String rs = "";
 		for (int i = 0; i < SIZE; i++) {
 			rs += "0";
@@ -30,10 +28,10 @@ public class DataAdjuster {
 		}
 		DecimalFormat df = new DecimalFormat("0.#");
 		df.setMaximumFractionDigits((int) (Range + 0.5));
-		String f = ZERO_PATTERN() + df.format(sigma);
-		String rsStr = f.substring(f.length() - size, f.length());
+		String f = ZERO_PATTERN(size) + df.format(sigma);
+		int flength = f.length();
+		String rsStr = f.substring(flength - size, flength);
 		double rs = Double.valueOf(rsStr) / Math.pow(10, size);
-//		System.out.println("sigma " + sigma + " rsStr: " + rsStr + ", rs: " + rs);
 		return rs;
 	}
 
