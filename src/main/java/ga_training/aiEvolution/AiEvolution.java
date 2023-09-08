@@ -93,8 +93,8 @@ public class AiEvolution {
 
 		double[] Defendend = new double[lenOfGen];
 		for (int i = 0; i < lenOfGen; i++) {
-			double df = (DNA1[i] - DNA2[i]) * 2;
-			Defendend[i] = Math.abs(df - 1);
+			double df = (DNA1[i] - DNA2[i]);
+			Defendend[i] = Math.abs(df);
 		}
 
 		GENE candidate = new GENE();
