@@ -77,6 +77,9 @@ public class CoinFlipGameSelection {
 		double[] rs = new double[len];
 		for (int i = 0; i < len; i++) {
 			rs[i] = Math.pow(remakeCandidateSet[i], smthgt.getOmega());
+			if (Double.isInfinite(rs[i])) {
+				rs[i] = Double.MAX_VALUE;
+			}
 		}
 		return rs;
 	}

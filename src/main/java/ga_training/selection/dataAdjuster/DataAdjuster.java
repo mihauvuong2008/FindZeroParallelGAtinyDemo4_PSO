@@ -26,6 +26,7 @@ public class DataAdjuster {
 		if (Double.isInfinite(Range)) {
 			Range = Double.MAX_VALUE;
 		}
+		sigma = Math.abs(sigma);
 		DecimalFormat df = new DecimalFormat("0.#");
 		df.setMaximumFractionDigits((int) (Range + 0.5));
 		String f = ZERO_PATTERN(size) + df.format(sigma);
@@ -51,11 +52,17 @@ public class DataAdjuster {
 				min = ele;
 			}
 		}
-
+		if (Double.isInfinite(max)) {
+			max = MAX;
+		}
+		if (size == 0)
+			return new SmooothGate(0, 0, 0);
 		double average = averageCount / size;
 		fakeAverage = (max + min) / (2);
+		if (average == 0 || Double.isInfinite(average) || Double.isInfinite(fakeAverage))
+			return new SmooothGate(0, 0, 0);
 		double tmp = fakeAverage / average;
-		double omega = tmp < 1 ? tmp : 1 / tmp;
+		double omega = ((tmp < 1) ? tmp : (1 / tmp));
 		SmooothGate smotgt = new SmooothGate(average, fakeAverage, omega);
 		return smotgt;
 	}
