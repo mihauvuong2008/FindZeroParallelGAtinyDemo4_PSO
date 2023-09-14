@@ -1,6 +1,5 @@
 package ga_training.aiEvolution;
 
-import appMain.FindZeroInout;
 import ga_training.GENE;
 import genetoPhenotypic.BinnaryGentoPhenotypic;
 
@@ -54,14 +53,14 @@ public class Valuer {
 
 	public final double getValue(GENE g) {
 		double dNAres = BinnaryGentoPhenotypic.convertFromBinaryToNegativeDec(g.getGene());
-		double x = FindZeroInout.getUpgradedx(upgrade, upgradeLen, dNAres);
-		double y = FindZeroInout.y(x);
-		return FindZeroInout.getUpgradedy(getValueLevel(), y);
+		double x = ValueHands.getUpgradedx(upgrade, upgradeLen, dNAres);
+		double y = ValueHands.y(x);
+		return ValueHands.getUpgradedy(getValueLevel(), y);
 	}
 
 	public final double getpartnerValue(double x) {
-		double y = FindZeroInout.y(x);
-		return FindZeroInout.getUpgradedy(getValueLevel(), y);
+		double y = ValueHands.y(x);
+		return ValueHands.getUpgradedy(getValueLevel(), y);
 	}
 
 	@SuppressWarnings("unused")

@@ -29,7 +29,7 @@ public class DataAdjuster {
 		sigma = Math.abs(sigma);
 		DecimalFormat df = new DecimalFormat("0.#");
 		df.setMaximumFractionDigits((int) (Range + 0.5));
-		String f = ZERO_PATTERN(size) + df.format(sigma);
+		String f = ZERO_PATTERN(size) + df.format(sigma).replace("-", "");
 		int flength = f.length();
 		String rsStr = f.substring(flength - size, flength);
 		double rs = Double.valueOf(rsStr) / Math.pow(10, size);

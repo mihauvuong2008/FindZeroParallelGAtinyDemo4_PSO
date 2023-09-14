@@ -1,9 +1,9 @@
-package appMain;
+package ga_training.aiEvolution;
 
-public final class FindZeroInout {
+public final class ValueHands {
 	private static final double MAX = Double.MAX_VALUE;
 
-	public FindZeroInout() {
+	public ValueHands() {
 		// TODO Auto-generated constructor stub
 	}
 

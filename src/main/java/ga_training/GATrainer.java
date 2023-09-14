@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
-import appMain.FindZeroInout;
 import appMain.GA_PSO_InOutForm;
 import ga_training.aiEvolution.AiEvolution;
+import ga_training.aiEvolution.ValueHands;
 import ga_training.aiEvolution.PlanOfchilds;
 import ga_training.selection.CoinFlipGameSelection;
 import ga_training.selection.DiceGameSelection;
@@ -344,7 +344,7 @@ public class GATrainer {
 		double Valuelevel = aiEvolution.getValuer().getValueLevel(); // update news
 		double DNAres = BinnaryGentoPhenotypic
 				.convertFromBinaryToNegativeDec(evaluatedCandidate.getCandidate().getGene());
-		double ResultValue = FindZeroInout.getUpgradedx(UpgradeValue, aiEvolution.getValuer().getUpgradeLen(), DNAres);
+		double ResultValue = ValueHands.getUpgradedx(UpgradeValue, aiEvolution.getValuer().getUpgradeLen(), DNAres);
 		Result rs = new Result(UpgradeValue, ResultValue, evaluatedCandidate, Valuelevel);
 
 		return rs;
