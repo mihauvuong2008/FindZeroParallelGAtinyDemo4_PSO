@@ -13,7 +13,7 @@ public final class ValueHands {
 
 //		return 2 * Math.pow(x, 5) + 3 * Math.pow(x, 4) - 8 * Math.pow(x, 3) + 2 * Math.pow(x, 2) + 1;
 
-		return Math.sin(Math.sin(x) * x + Math.sin(x + 1));
+		return (x - 1) * (x - 2) * (x - 3);
 	}
 
 	public final static double getUpgradedx(double upgrade, long upgradeLen, double dNAres) {

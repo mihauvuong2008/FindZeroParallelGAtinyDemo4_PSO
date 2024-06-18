@@ -56,7 +56,7 @@ public class SortSelection {
 			index = (int) (ran.nextInt(len) * ran.nextDouble() * ran.nextDouble() * gama);
 //			System.out.println("index" + index);
 			GENE g = new GENE();
-			g.setGene(candidateSet.get(index).getCandidate().getGene());
+			g.setGene(_candidateSet.get(index).getCandidate().getGene());
 			rs.add(g);
 		}
 		return rs;
