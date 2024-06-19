@@ -31,7 +31,9 @@ public class DataAdjuster {
 		df.setMaximumFractionDigits((int) (Range + 0.5));
 		String f = ZERO_PATTERN(size) + df.format(sigma).replace("-", "");
 		int flength = f.length();
-		String rsStr = f.substring(flength - size, flength);
+		int start = flength - size;
+		start = start < 0 ? 0 : start;
+		String rsStr = f.substring(start, flength);
 		double rs = Double.valueOf(rsStr) / Math.pow(10, size);
 		return rs;
 	}
